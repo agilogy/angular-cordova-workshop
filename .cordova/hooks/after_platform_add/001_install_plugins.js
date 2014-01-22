@@ -6,7 +6,8 @@
 // the identifier, the filesystem location 
 // or the URL
 var pluginlist = [
-    "org.apache.cordova.file"
+    "org.apache.cordova.file",
+    "org.apache.cordova.device"
 ];
  
 // no need to configure below

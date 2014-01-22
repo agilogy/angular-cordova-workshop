@@ -30,8 +30,8 @@
         <div class="app">
             <h1>{{greeting}}</h1>
             <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+                <p class="event listening" ng-style="received && {display:'none'}">Connecting to Device</p>
+                <p class="event received" ng-style="received && {display:'block'}">Device is Ready</p>
             </div>
         </div>
         
@@ -40,9 +40,5 @@
         <script type="text/javascript" src="js/vendor/angular-ui-router/release/angular-ui-router.js"></script>
 
         <script type="text/javascript" src="js/app/app.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script>
-            app.initialize();
-        </script>
     </body>
 </html>
