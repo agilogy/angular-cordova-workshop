@@ -28,10 +28,10 @@
     </head>
     <body ng-app="ngMemory" ng-controller="MainCtrl">
         <div class="app">
-            <h1>{{foo}}</h1>
+            <h1>{{greeting}}</h1>
             <div id="deviceready" class="blink">
-                <p class="event" ng-class="{'listening': state === 'listening', 'received': state === 'received' }">Connecting to Device</p>
-                <p class="event" ng-class="{'received': state === 'listening', 'listening': state === 'received' }">Device is Ready</p>
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
             </div>
         </div>
         
@@ -40,5 +40,9 @@
         <script type="text/javascript" src="js/vendor/angular-ui-router/release/angular-ui-router.js"></script>
 
         <script type="text/javascript" src="js/app/app.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script>
+            app.initialize();
+        </script>
     </body>
 </html>
