@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "angular": "~1.2.9",
-    "angular-ui-router": "0.2.7"
+    "angular-ui-router": "0.2.7",
+    "angular-bootstrap": "~0.10.0",
+    "fastclick": "~0.6.11"
   }
 }

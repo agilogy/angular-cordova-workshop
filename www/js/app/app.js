@@ -1,4 +1,10 @@
-angular.module('ngMemory', [])
+angular.module('ngMemory', ['ui.bootstrap'])
+
+.run(function($window){
+	$window.addEventListener('load', function() {
+    	FastClick.attach(document.body);
+	}, false);
+})
 
 .controller('MainCtrl', function($scope, cordovaService, picturesService){
 

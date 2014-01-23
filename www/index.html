@@ -23,19 +23,57 @@
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/metro-bootstrap.css">
         <title>Hello World</title>
+        <style type="text/css">
+/*
+ The animate class is apart of the element and the ng-enter class
+ is attached to the element once the enter animation event is triggered
+*/
+.reveal-animation.ng-leave {
+ -webkit-transition: 1s linear all; /* Safari/Chrome */
+ transition: 1s linear all; /* All other modern browsers and IE10+ */
+ 
+ /* The animation preparation code */
+ opacity: 0;
+}
+ 
+/*
+ Keep in mind that you want to combine both CSS
+ classes together to avoid any CSS-specificity
+ conflicts
+*/
+.reveal-animation.ng-enter.ng-enter-active {
+ /* The animation code itself */
+ opacity: 1;
+}
+</style>
     </head>
     <body ng-app="ngMemory" ng-controller="MainCtrl">
-        <div class="app">
-            <h1>{{greeting}}</h1>
-            <div ng-repeat="picture in entries">
-                <img ng-src="{{picture.fullPath}}" style="width: 200px; height: 200px; float: left">
+        <div class="container">
+            <div class="page-header">
+              <h4 class="text-right">Agilogy slide show</h4>
             </div>
-
+            <div class="panel panel-default">
+              <div class="panel-body">
+                    <carousel interval="myInterval">
+                      <slide ng-repeat="picture in entries" active="slide.active">
+                        <img ng-src="{{picture.fullPath}}" style="margin:auto;">
+                        <div class="carousel-caption">
+                          <h4>Slide {{$index}}</h4>
+                        </div>
+                      </slide>
+                    </carousel>
+              </div>
+            </div>
         </div>
         
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/vendor/angular/angular.js"></script>
+        <script type="text/javascript" src="js/vendor/angular-bootstrap/ui-bootstrap.js"></script>
+        <script type="text/javascript" src="js/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script type="text/javascript" src="js/vendor/fastclick/lib/fastclick.js"></script>
         <script type="text/javascript" src="js/vendor/angular-ui-router/release/angular-ui-router.js"></script>
 
         <script type="text/javascript" src="js/app/app.js"></script>
