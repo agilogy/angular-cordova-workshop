@@ -1,4 +1,4 @@
-angular.module('ngMemory', ['ui.bootstrap'])
+angular.module('ngMemory', [])
 
 .run(function($window){
 	$window.addEventListener('load', function() {
@@ -6,18 +6,81 @@ angular.module('ngMemory', ['ui.bootstrap'])
 	}, false);
 })
 
-.controller('MainCtrl', function($scope, cordovaService, picturesService){
+.controller('MainCtrl', function($scope, cordovaService){
 
-	$scope.greeting = 'Apache Cordova';
+	var entries = [
+		{ visible: false, icon:'fa-android'},
+		{ visible: false, icon:'fa-github'},
+		{ visible: false, icon:'fa-windows'},
+		{ visible: false, icon:'fa-apple'},
+		{ visible: false, icon:'fa-html5'},
+		{ visible: false, icon:'fa-linux'}
+	];
+	
+	function shuffle(array) {
+	//Source https://github.com/coolaj86/knuth-shuffle
+	  var currentIndex = array.length
+	    , temporaryValue
+	    , randomIndex
+	    ;
 
-	picturesService.readPictures()
-		.then(function(pictures){
-			var len = pictures.length;
-			if (len < 6)
-				alert('Lenght is ' + len + '. Go take some pictures :)');
+	  // While there remain elements to shuffle...
+	  while (0 !== currentIndex) {
 
-			$scope.entries = pictures;
+	    // Pick a remaining element...
+	    randomIndex = Math.floor(Math.random() * currentIndex);
+	    currentIndex -= 1;
+
+	    // And swap it with the current element.
+	    temporaryValue = array[currentIndex];
+	    array[currentIndex] = array[randomIndex];
+	    array[randomIndex] = temporaryValue;
+	  }
+
+	  return array;
+	}
+
+
+
+	var newgame = function(){
+		$scope.rows = shuffle(angular.copy(entries.concat(entries.slice(0))));
+	}
+	
+	var clearClicked = function(tilesIdxs){
+		angular.forEach(tilesIdxs, function(tileIndex){
+			$scope.rows[tileIndex].visible = false;
 		});
+	};
+
+	var haveSameIcon = function(tilesIdxs){
+		return $scope.rows[tilesIdxs[0]].icon == $scope.rows[tilesIdxs[1]].icon;
+	};
+
+	var discoverTiles = function(tilesIdxs){
+		angular.forEach(tilesIdxs, function(tileIndex){
+			$scope.rows[tileIndex].discovered = true;
+		});
+	};
+
+	var clickedTiles = [];
+
+	$scope.toggle = function(idx){
+		if (clickedTiles.length == 2){
+			if (haveSameIcon(clickedTiles)){
+				discoverTiles(clickedTiles)
+			}
+			clearClicked(clickedTiles);
+			clickedTiles = [];		
+		}
+		
+		clickedTiles.push(idx);
+		$scope.rows[idx].visible =! $scope.rows[idx].visible;
+	};
+
+	$scope.newgame = newgame;
+
+	newgame();
+
 })
 
 .service('cordovaService', function($window, $q) {
@@ -30,72 +93,6 @@ angular.module('ngMemory', ['ui.bootstrap'])
     document.addEventListener('deviceready', function() {
       deferredReady.resolve($window.device);
     });
-
-})
-
-.factory('picturesService', function($window, $q, cordovaService) {
-
-
-	function readPictures(fileSystemRoot){
-		var deferred = $q.defer();
-
-		fileSystemRoot.getDirectory('DCIM/Camera', {create:false}, function(dirEntry){
-			
-			// Get a directory reader
-			var directoryReader = dirEntry.createReader();
-
-			// Get a list of all the entries in the directory
-			directoryReader.readEntries(success,fail);
-		});
-
-		function success(entries) {
-		    deferred.resolve(entries);
-		}
-
-		function fail(error) {
-		    deferred.reject("Failed to list directory contents");
-		    alert("Failed to list directory contents: " + error.code);
-		}
-		
-
-		return deferred.promise;
-	}
-
-	function getFileSystem() {
-	    var deferred = $q.defer();
-
-	    function fail() {
-	        var msg = "failed to get filesystem";
-	        deferred.reject(msg)
-	        console.log(msg);
-	    }
-	    function gotFS(fileSystem) {
-	        deferred.resolve(fileSystem.root);
-	        console.log("got filesystem: " + fileSystem.root.fullPath);
-	    }
-        
-        window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-
-        return deferred.promise;
-    }
-
-
-
-	return {
-		getFileSystem: function(){
-			return cordovaService.$ready
-				.then(getFileSystem);
-		},
-		readPictures: function(){
-
-			return cordovaService.$ready
-				.then(getFileSystem)
-				.then(readPictures);
-	
-		}
-	}
 
 })
 
