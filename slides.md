@@ -6,95 +6,42 @@ by [@_sgimeno](http://www.twitter.com/_sgimeno) and [@amatiasq](http://www.twitt
 <img src="angularbcn-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
 <img src="agilogy-logo.png" style="border:none; background:none; box-shadow: none; height: 100px; margin-bottom:30px;" />
 ---
-## Why Angular on Mobile?
+## What is Cordova / Phonegap?
+
+>Cordova is an open-source mobile development framework. It allows you to use standard web technologies such as HTML5, CSS3, and JavaScript for cross-platform development, avoiding each mobile platforms' native development language.
 
 
- + Testable code
- + Less code (less bugs, maintainability)
- + Directives (reusable components)
- + Promises
- + Trendy
-
+<img src="cordova-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
+<img src="phonegap-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
 --
-### CONS
- + Wants to own the DOM
-  + Directives required
-  + Behavior in a declarative way?
+## Cordova background
 
- + New framework, still evolving
-
---
-## What is Cordova?
-
->Cordova is an open-source mobile development framework. It allows you to use standard web technologies such as HTML5, CSS3, and JavaScript for cross-platform development, avoiding each mobile platforms' native development language. 
---
-## Cordova in 30s
-
- + Embeds HTML5 code inside a WebView
- + Makes native accessible from JavaScript
+ + Embeds HTML5 code inside a platform WebView
+ + Makes device features accessible from JavaScript
  + Able to be extended with native functionaity via plug-ins
  + Web based mobile app you can put in iOS App Store, or Google Play Store
  + Build & deploy tools allow you to write 1.5x and run everywhere
- + Can be used with many web frameworks (JQM, Sencha, )
-
----
-## The workshop
-
-We are going to incrementally build a simple game
-
-Sorry but there will be no tests (we want to keep it simple)
---
-## Tools
-
-We need `grunt-cli` and `npm` for resolving dependencies and development.
-
-And, of course, an editor and a browser 
-
-<img src="node-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
-<img src="grunt-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
-<img src="cordova-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
-<img src="Google-Chrome-Canary-icon.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
-<img src="angularbcn-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
-
---
-## Development
-
- + Resolve dependencies
- ```
- $ npm install
- ```
- + Develop in a browser
- ```
- $ cordova serve [platform]
- ```
- + Watch changes in our sources
-```
-$grunt watch
-```
-equivalent to
-```
-cordova prepare
-```
+ + Can be used with many web frameworks (JQM, Sencha, Ionic)
 
 --
 
 ## Platforms
 
-We need at least 1 platform **SDK** to deploy our application
+We need each platform **SDK** to deploy our application
 
-<img src="apple-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
-<img src="android-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
-<img src="wp-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
 <img src="firefox-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
+<img src="android-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
+<img src="apple-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
 
-<small>If you are on iOS, you will need to test on simulator.</small>
+...Windows Phone, BlackBerry, webOS, Bada...
+
 --
 
-## Building
+## Building commands
 
 Add a platform
  ```
- cordova platform add <ios|android|blackberry|..>
+ cordova platform add <ios|android|blackberry>
  ```
  Add a plugin
  ```
@@ -114,10 +61,60 @@ Add a platform
  ```
  cordova run [platform]
  ```
-
+ Develop in a browser
+ ```
+ $ cordova serve [platform]
+ ```
 
 <small>If you are on iOS, you will need to test on simulator.</small>
+
+--
+
+## Cordova project structure
+
+<img src="tree.png" alt="">
+  
+</pre>
+
+
+
+--
+
+## Express Cordova install
+
+```
+npm install -g cordova # cordova@3.3.1
+```
+
 ---
+## The workshop
+
++ STEP-0: Boot the HelloWorld app
++ STEP-1: AngularJS meets Cordova
++ STEP-2: Collect device pictures
++ STEP-3: Build a simple game using some API's 
+
+
+--
+## Tools
+
+We need `grunt-cli` and `npm` for resolving dependencies and development.
+
+And, of course, an editor and a browser 
+
+<img src="node-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
+<img src="grunt-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
+<img src="angularbcn-logo.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
+<img src="Google-Chrome-Canary-icon.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
+
+
+
+
+
+
+---
+
+
 ## STEP 0
 
 Set it up
@@ -128,24 +125,23 @@ $ npm install
 $ cordova platform add <ios|android>
 $ cordova serve
 $ grunt ## watch sources for development
+$ git checkout step-0
+$ git checkout -b new_branch
 ```
 
 Point your browser to `http://localhost:8000/<platform>/www/index.html`
 
 <small>If you are on windows, you will need to also run bower install</small>
---
-## STEP 0
 
-### YOU SHOULD SEE THIS
 ---
 ## STEP 1
 
 Do not call Cordova (native) javascript functions until deviceready fires 
 
-
-
 ```
-document.addEventListener('deviceready', onDeviceReady, false);
+document.addEventListener('deviceready', function(){
+  // cordova and device objects available
+}, false);
 ```
 --
 ## STEP 1
@@ -157,140 +153,96 @@ document.addEventListener('deviceready', onDeviceReady, false);
 ```
 var deferredReady = $q.defer();
 ...
-_document.addEventListener('deviceready', function() {
+$document.addEventListener('deviceready', function() {
       deferredReady.resolve($window.device);
     });
 ...
 ```
 --
- ## Why should we do so?
-
- Prevent Cordova calls before it is ready
-
- Cordova callbacks are executed *OUT* of the Angular loop
-
- Promises are a way to let AngularJS know when to *update the DOM*
-
- <small>There are other approcahes, like calling $apply on callbacks</small>
-
---
 
 ### Let's code:
 
-Add two buttons to go to previous and next date
+ + Make a `cordovaService` to handle `deviceready`
+ + Show your device platform and version on the screen
 
-    <button class="btn btn-default btn-lg" ng-click="prev()"> Previous </button>
----
-## STEP 2: More templates and data binding
-
-ng-repeat
---
-
-ng-repeat directive
-
-    <td ng-repeat="label in ['Sun','Mon','Tue','Wed','Thu', 'Fri', 'Sat']">
-        {{label}}
-    </td>
-
-or
-
-    <td ng-repeat="label in labels">
-        {{label}}
-    </td>
---
-### Let's code:
-
-Show a whole month, like here: 
-<img src="whole-month.png" />
-
-previous and next move across months, not days
+<img src="step-1.png" style="border:none; background:none; box-shadow: none; margin-right:20px;" />
 
 ---
-## STEP 3: Services and dependency injection
-dependency injection
+## STEP 2
 
-services, values and factories
+Getting the pictures in the phone
+
+```
+  function getFileSystem() {
+      var deferred = $q.defer();
+
+      function fail() {
+          deferred...
+      }
+
+      function gotFS(fileSystem) {
+          deferred...
+      }
+        
+      //Cordova File API
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+
+      return deferred.promise;
+    }
+```
 --
-###Dependency injection
-Our components are not responsible for the resolution of their dependencies. 
 
-Makes testing easier
+## STEP 2
 
-Better separation of concerns: Dependency resolution is not a concern for our code anymore
+Interacting with a Cordova API using promises
 
-    calendar.controller('CalendarController', 
-        function ($scope, $modal, CalendarService) {
-        ... this controller depends on $scope, $modal and CalendarService
-    });
---
-Dependency injection at the module level determines the loading of the module (if no one depends
-on module X it will not be loaded)
+```
+.factory('fileService', function($window, $q, cordovaService) {
 
-Dependency injection at the service/controller level determines what is available to the service/controller
+  ...
 
---
-##Services, values and factories
-
-A service can be either an object or a function that provides some behavior to other components
-
-We can register it by using the Module#factory method:
-
-    var myModule = angular.module('myModule', []);
-    myModule.factory('CalendarService', function($http) {
-        ... the calendar service depends on the $http service
-        });
+  return {
+    getFileSystem: function(){
+      return cordovaService.$ready
+        .then(getFileSystem);
+    },
+    readPictures: function(){
+      return cordovaService.$ready
+        .then(getFileSystem)
+        .then(readPictures);
+    }
+  }
+});
+```
 
 --
 ### Let's code:
 
-Refactor your application so that your controller has only presentation logic and domain logic is moved to a service
+Finish the fileService and show some of the phone pictures in a carousel
+
+
+---
+## STEP 3 
+
+Add some awesome modules to your project using *bower* to build some cool game or app
+
+
+
+--
+
+##STEP 3
+
+These are some great starting points
+
++ [Snap.js](https://github.com/jtrussell/angular-snap.js-bower)
++ [PureCSS](http://purecss.io/)
++ [Angular gestures](https://github.com/wzr1337/angular-gestures)
++ [Metro Bootstrap](http://talkslab.com/metro-bootstrap)
++ [Ionic Framework](http://ionicframework.com/)
++ [Angular Carousel](https://github.com/revolunet/angular-carousel)
+
 
 ---
 
-## Other topics to explore with this repo
---
-###Angular promises
-
-Angular's $q is a promise implementation inspired by `Q`
-
-    var promise = asyncGreet('Robin Hood');
-    promise.then(function(greeting) {
-      alert('Success: ' + greeting);
-    }, function(reason) {
-      alert('Failed: ' + reason);
-    }, function(update) {
-      alert('Got notification: ' + update);
-    });
-
-Promises are a way to avoid callback hell and are easy to compose
-
---
-### Angular UI
-A collection of UI-related modules
-
-ui-bootstrap implements bootstrap without depending on jquery
-
-We have used it for the modal component (edit / delete an event)
-
-It provides a promise based API 
---
-### Angular HTTP
-
-This service facilitates communication with remote HTTP servers
-
-It provides an API similar to the one of the promises
-
-    $http.get('/someUrl').success(successCallback);
-
-Alternatively, you can also use the `resource` service
-
-Angular also provides a way to mock the server for testing
---
-### Let's code
-
-* Edit an event (using AngularUI's modal)
-* Delete an event
-* Use $http to communicate with a backend (you can use MongoHQ REST API)
----
 #Thank you!
 
