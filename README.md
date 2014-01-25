@@ -22,7 +22,7 @@ $ grunt ## for development
 $ grunt run ## for building and runing
 ```
 
-Point your browser to http://0.0.0.0:8000/<platform>/www/index.html
+Point your browser to http://0.0.0.0:8000/{platform}/www/index.html
 
 ###Note for windows users
 
