@@ -2,15 +2,17 @@
 -----------
 
 ##Dependencies
-
-This project depends on npm and grunt-cli. Installing Apache Cordova system wide is also recommended.
  
- + NodeJS link
- + npm link
- + Cordova link
- + grunt-cli link
+ + [npm](https://npmjs.org/)
+ + [grunt-cli](http://gruntjs.com/)
 
-## Get started
+##Install cordova
+
+```
+npm install -g cordova
+```
+
+## Start developing
 
 ```
 $ git clone git@github.com:agilogy/angular-memory-game.git
@@ -20,3 +22,5 @@ $ cordova serve
 $ grunt ## for development
 $ grunt run ## for building and runing
 ```
+
+Point your browser to [http://0.0.0.0:8000/<platform>/www/index.html](http://0.0.0.0:8000/<platform>/www/index.html)
