@@ -14,7 +14,7 @@ npm install -g cordova
 ## Start developing
 
 ```
-$ git clone git@github.com:agilogy/angular-memory-game.git
+$ git clone git@github.com:agilogy/angular-cordova-workshop.git
 $ npm install
 $ cordova platform add <ios|android>
 $ cordova serve

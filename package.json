@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Memory game",
   "main": "Gruntfile.js",
-  "repository": "https://github.com/agilogy/angular-memory-game",
+  "repository": "https://github.com/agilogy/angular-cordova-workshop",
   "keywords": [
     "angularjs",
     "cordova"
