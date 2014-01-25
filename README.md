@@ -1,5 +1,4 @@
 ## ngMemory
------------
 
 ##Dependencies
  
@@ -23,4 +22,8 @@ $ grunt ## for development
 $ grunt run ## for building and runing
 ```
 
-Point your browser to [http://0.0.0.0:8000/<platform>/www/index.html](http://0.0.0.0:8000/<platform>/www/index.html)
+Point your browser to http://0.0.0.0:8000/<platform>/www/index.html
+
+###Note for windows users
+
+`bower install` should be automatically executed after `npm install`, how ever if it fails you will have to run it manually.
