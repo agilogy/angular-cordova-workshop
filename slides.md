@@ -117,10 +117,10 @@ And, of course, an editor and a browser
 
 ## STEP 0
 
-Set it up
+Clone the [repo](https://github.com/agilogy/angular-cordova-workshop) and set it up
 
 ```
-$ git clone git@github.com:agilogy/angular-memory-game.git
+$ git clone git@github.com:agilogy/angular-cordova-workshop.git
 $ npm install
 $ cordova platform add <ios|android>
 $ cordova serve
